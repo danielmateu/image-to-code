@@ -36,7 +36,9 @@ export const runtime = 'edge';
 
 export async function POST(req: Request) {
     // const { messages } = await req.json();
-    const { url } = await req.json();
+    const { url, img } = await req.json();
+    const imageUrl = url ?? img;
+
     const response = await openai.chat.completions.create({
         model: 'gpt-4-vision-preview',
         stream: true,
@@ -54,7 +56,7 @@ export async function POST(req: Request) {
                     },
                     {
                         type: 'image_url',
-                        image_url: url
+                        image_url: imageUrl
                     }
                 ]
             }
